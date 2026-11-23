@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
-from concurrent.futures import ThreadPoolExecutor, TimeoutError, as_completed
+from concurrent.futures import ThreadPoolExecutor, wait
 from typing import TypeVar
 
 K = TypeVar("K")
@@ -35,16 +35,23 @@ class ConcurrentBatchRunner:
         if not unique_keys:
             return results, errors
 
-        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+        executor = ThreadPoolExecutor(max_workers=self.max_workers)
+        try:
             future_map = {executor.submit(worker_fn, key): key for key in unique_keys}
+            done, not_done = wait(future_map.keys(), timeout=self.timeout_seconds)
 
-            for future in as_completed(future_map):
+            for future in done:
                 key = future_map[future]
                 try:
-                    results[key] = future.result(timeout=self.timeout_seconds)
-                except TimeoutError:
-                    errors[key] = f"Worker timed out after {self.timeout_seconds}s"
+                    results[key] = future.result()
                 except Exception as exc:  # noqa: BLE001
                     errors[key] = f"{type(exc).__name__}: {exc}"
+
+            for future in not_done:
+                key = future_map[future]
+                future.cancel()
+                errors[key] = f"Worker timed out after {self.timeout_seconds}s"
+        finally:
+            executor.shutdown(wait=False, cancel_futures=True)
 
         return results, errors

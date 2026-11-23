@@ -1,0 +1,53 @@
+# ==========================================
+# 1. INTELLECTUAL PROPERTY & DATASETS
+# ==========================================
+data/
+private/
+*.parquet
+*.csv
+*.tsv
+*.txt
+!requirements.txt
+*.json
+*.xml
+*.kgml
+*.db
+*.sqlite3
+
+# Locally generated PyVis HTML artifacts
+network_render_*.html
+
+# Exploratory research & ETL notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# ==========================================
+# 2. SECRETS & ENVIRONMENT VARIABLES
+# ==========================================
+.env
+.env.*
+.streamlit/secrets.toml
+
+# ==========================================
+# 3. PYTHON, CACHE, BUILDS & TESTS
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# ==========================================
+# 4. OPERATING SYSTEM & IDEs
+# ==========================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -69,7 +69,7 @@ def test_runner_isolates_slow_worker_timeouts() -> None:
 
     assert results == {"fast_endpoint": "fast_ok"}
     assert "slow_endpoint" in errors
-    assert "Timed out" in errors["slow_endpoint"]
+    assert "timed out" in errors["slow_endpoint"]
 
 
 def test_runner_executes_tasks_in_parallel() -> None:

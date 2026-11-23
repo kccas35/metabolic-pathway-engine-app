@@ -106,19 +106,23 @@ This repository exposes the **typed domain contracts, concurrent execution harne
 
 ```text
 metabolic-pathway-engine/
-├── .github/workflows/ci.yml        # Automated pytest & type-check pipeline
+├── .github/workflows/ci.yml        # Automated pytest verification pipeline
 ├── assets/
 │   └── demo.gif                    # Live application walkthrough
 ├── src/
 │   └── metabolic_engine/
 │       ├── __init__.py             # Public SDK exports
 │       ├── contracts.py            # Strict Pydantic schemas & Engine Protocol
-│       ├── resilience.py           # Concurrent worker pool, retries & timeout isolation
+│       ├── graph_renderer.py       # NetworkX + PyVis zero-rerun HTML/JS renderer
+│       ├── resilience.py           # Concurrent worker pool & timeout isolation
 │       └── mock_adapter.py         # Deterministic sandbox adapter for local dev & CI
 ├── tests/
-│   ├── test_resilience.py          # Concurrency, partial-failure & timeout tests
-│   └── test_contracts.py           # Boundary validation & schema integrity tests
+│   ├── test_contracts.py           # Boundary validation & schema integrity tests
+│   ├── test_graph_renderer.py      # Graph styling & client-side JS injection tests
+│   ├── test_mock_adapter.py        # Sandbox profile & engine factory tests
+│   └── test_resilience.py          # Concurrency, partial-failure & timeout tests
 ├── .gitignore
+├── app.py                          # Decoupled Streamlit presentation layer
 ├── pyproject.toml
 └── README.md
 ```

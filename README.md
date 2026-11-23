@@ -2,7 +2,7 @@
 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Application-Metabolic_Performance_App-ff4b4b?style=for-the-badge)](https://<SEU-LINK-DO-STREAMLIT>.streamlit.app)
 [![Architecture](https://img.shields.io/badge/🏗️_Architecture-Decoupled_Black--Box_Core-22c55e?style=for-the-badge)](#-system-architecture--ip-boundary)
-[![Tests](https://img.shields.io/badge/✅_Quality_Gate-Type--Hinted_&_Pytest_CI-38bdf8?style=for-the-badge)](#-public-sdk--repository-structure)
+[![Tests](https://img.shields.io/badge/✅_Quality_Gate-Type--Hinted_&_Pytest_CI-38bdf8?style=for-the-badge)](#-repository-intent--codebase-breakdown)
 
 **Core Stack:** `Python 3.10+` • `Apache Parquet (PyArrow)` • `Pandas` • `NetworkX` • `Concurrent Futures (Multithreading)` • `Pydantic` • `Streamlit` • `Client-Side JS Injection` • `Pytest` • `GitHub Actions`
 
@@ -100,9 +100,18 @@ flowchart LR
 
 ---
 
-## 📂 Public SDK & Repository Structure
+## 📂 Repository Intent & Codebase Breakdown
 
-This repository exposes the **typed domain contracts, concurrent execution harness, mock engine adapter, and automated test suite** used in production. Proprietary ETL pipelines, curated datasets, graph weighting heuristics, and clinical rule tables reside in a private repository.
+**Why This Repository Exists:** This repository is the **public SDK, concurrency layer, and interactive UI shell** of the platform. Built around strict dependency inversion (`MetabolicEngineProtocol`), it allows engineers and recruiters to clone, test, and run the full interactive graph experience locally via a deterministic sandbox—while keeping proprietary genomic datasets, clinical weighting heuristics, and nutrition rule engines protected in a private production core.
+
+| Module / File | Architectural Responsibility |
+| :--- | :--- |
+| `src/metabolic_engine/contracts.py` | Defines immutable `Pydantic` v2 input/output schemas and the `MetabolicEngineProtocol` interface boundary decoupling the UI from the private engine. |
+| `src/metabolic_engine/resilience.py` | Implements `ConcurrentBatchRunner` (`ThreadPoolExecutor`) with key deduplication and isolated per-worker timeout/exception handling. |
+| `src/metabolic_engine/graph_renderer.py` | Converts validated network payloads into `NetworkX` directed graphs and renders `PyVis` HTML canvases with injected client-side JS click handlers (`< 1 ms` zero-rerun cards). |
+| `src/metabolic_engine/mock_adapter.py` | Provides `SandboxPathwayEngine` for offline demos/CI alongside `resolve_engine()`, a runtime factory that seamlessly hot-swaps the private core in production. |
+| `app.py` | Decoupled Streamlit frontend powered by `@st.cache_resource` and `@st.cache_data` that consumes the SDK without direct database or API coupling. |
+| `tests/` | Automated 22-test `pytest` suite (run via GitHub Actions CI) verifying schema immutability, parallel worker timeouts, dangling-edge pruning, and JS overlay injection. |
 
 ```text
 metabolic-pathway-engine/
@@ -115,7 +124,7 @@ metabolic-pathway-engine/
 │       ├── contracts.py            # Strict Pydantic schemas & Engine Protocol
 │       ├── graph_renderer.py       # NetworkX + PyVis zero-rerun HTML/JS renderer
 │       ├── resilience.py           # Concurrent worker pool & timeout isolation
-│       └── mock_adapter.py         # Deterministic sandbox adapter for local dev & CI
+│       └── mock_adapter.py         # Deterministic sandbox adapter & runtime resolver
 ├── tests/
 │   ├── test_contracts.py           # Boundary validation & schema integrity tests
 │   ├── test_graph_renderer.py      # Graph styling & client-side JS injection tests
@@ -127,13 +136,14 @@ metabolic-pathway-engine/
 └── README.md
 ```
 
-### Running the Verification Suite Locally
+### Running the Verification Suite & Local Sandbox
 
 ```bash
-git clone [https://github.com/kccas35/metabolic-pathway-engine.git](https://github.com/kccas35/metabolic-pathway-engine.git)
-cd metabolic-pathway-engine
+git clone [https://github.com/kccas35/metabolic-pathway-engine-app.git](https://github.com/kccas35/metabolic-pathway-engine-app.git)
+cd metabolic-pathway-engine-app
 pip install -e ".[dev]"
 pytest
+streamlit run app.py
 ```
 
 ---

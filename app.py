@@ -1,4 +1,4 @@
-"""Streamlit presentation layer decoupled via MetabolicEngineProtocol."""
+"""Decoupled reference UI for `MetabolicEngineProtocol` featuring profile selection, metabolic efficiency metrics, triage alerts, and interactive PyVis pathway graphs."""
 
 from __future__ import annotations
 

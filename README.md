@@ -12,7 +12,7 @@
 
 ## 💡 What It Is & Why It Is Revolutionary
 
-The engine (powering the live **[Metabolic Performance App](https://<SEU-LINK-DO-STREAMLIT>.streamlit.app)**) turns a raw DNA file into a **live, interactive map of your metabolism**—pinpointing hidden biochemical bottlenecks and telling you **exactly what to eat today** to optimize them.
+The engine (powering the live **[Metabolic Performance App](https://metabolic-app.streamlit.app/)**) turns a raw DNA file into a **live, interactive map of your metabolism**—pinpointing hidden biochemical bottlenecks and telling you **exactly what to eat today** to optimize them.
 
 ### Why This Changes the Game
 **Every consumer DNA app on the market runs on 1990s spreadsheet logic:** *"You have variant X → read this generic PDF."*

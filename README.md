@@ -1,6 +1,6 @@
 # 🧬 Metabolic Pathway App
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Application-Metabolic_Performance_App-ff4b4b?style=for-the-badge)](https://<SEU-LINK-DO-STREAMLIT>.streamlit.app)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Application-Metabolic_Performance_App-ff4b4b?style=for-the-badge)](https://metabolic-app.streamlit.app)
 [![Architecture](https://img.shields.io/badge/🏗️_Architecture-Decoupled_Black--Box_Core-22c55e?style=for-the-badge)](#-system-architecture--ip-boundary)
 [![Tests](https://img.shields.io/badge/✅_Quality_Gate-Type--Hinted_&_Pytest_CI-38bdf8?style=for-the-badge)](#-repository-intent--codebase-breakdown)
 
@@ -160,4 +160,4 @@ streamlit run app.py
 Want to review the private graph-weighting algorithms, ETL benchmarks, or system design trade-offs in a technical interview?
 
 - **GitHub:** [@kccas35](https://github.com/kccas35)
-- **LinkedIn:** [Connect on LinkedIn](https://<SEU-LINKEDIN>)
+- **LinkedIn:** [Connect on LinkedIn](www.linkedin.com/in/karime-campos-566597227)
